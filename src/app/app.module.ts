@@ -12,6 +12,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
+  NbAutocompleteModule,
   NbChatModule,
   NbDatepickerModule,
   NbDialogModule,
@@ -20,6 +21,7 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +41,7 @@ import {
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    NbAutocompleteModule,
   ],
   bootstrap: [AppComponent],
 })
