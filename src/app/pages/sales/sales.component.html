@@ -1,0 +1,117 @@
+<h3>Sales</h3>
+<!--input sales card-->
+<nb-card style="margin-top: 30px; padding: 5px">
+  <nb-card-body>
+    <div [formGroup]="salesFormGroup">
+      <div class="row mb-2">
+        <span>Input sales records</span>
+      </div>
+      <div class="row">
+        <div class="col">
+          <span>Product: </span>
+          <input
+            nbInput
+            type="text"
+            formControlName="name"
+            placeholder="search product"
+            [nbAutocomplete]="autoControl">
+          <nb-autocomplete #autoControl>
+            <nb-option *ngFor="let option of filteredControlOptions$ | async" [value]="option">
+              {{option}}
+            </nb-option>
+          </nb-autocomplete>
+        </div>
+        <div class="col">
+          <span>Quantity: </span>
+          <input nbInput type="number" formControlName="quantity">
+        </div>
+        <div class="col">
+          <span>Discount: </span>
+          <input nbInput type="number" formControlName="discount">
+        </div>
+        <div class="col">
+          <span>Price: </span>
+          <input nbInput type="number" formControlName="price">
+        </div>
+        <div class="col d-flex justify-content-center">
+          <div style="margin-top: 15px">
+            <button nbButton status="primary" (click)="addToSalesArr()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<!--sales records card-->
+<nb-card *ngIf="salesRecords.length > 0">
+  <nb-card-body>
+    <div class="container text-center">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Date</th>
+          <th scope="col">Product</th>
+          <th>Quantity</th>
+          <th>Discount</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let sale of salesRecords">
+          <td>{{sale?.date}}</td>
+          <td>{{sale?.name}}</td>
+          <td>{{sale?.quantity}}</td>
+          <td>{{sale?.discount}}</td>
+          <td>{{sale?.price}}</td>
+          <th>
+            <button nbButton size="small" outline status="primary" style="margin-right: 5px" (click)="openDialog(editSale)">Edit</button>
+            <button nbButton size="small" outline status="danger">Remove</button>
+          </th>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<!--checkout card-->
+<nb-card *ngIf="salesRecords.length > 0">
+  <nb-card-body>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col">
+        <span class="text-bold text-large" style="margin-right: 10px">Total: {{getTotal()}}</span>
+        <button nbButton status="success">Checkout</button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<!--open-edit-popup-->
+<ng-template #editSale let-data let-ref='dialog-ref'>
+  <nb-card>
+    <nb-card-body>
+      <div class="container">
+        <div class="row border-bottom my-2">
+          <div class="col">Edit Sale</div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <span>Quantity: </span>
+            <input nbInput type="number">
+          </div>
+        </div>
+        <div class="row justify-content-end mt-3">
+          <div class="col"></div>
+          <div class="col"></div>
+          <div class="col">
+            <button nbButton status="primary" size="small">Save</button>
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
